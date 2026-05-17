@@ -31,127 +31,329 @@
 
     body {
       font-family: 'Source Serif 4', Georgia, serif;
-      background: var(--paper);
+      background: linear-gradient(135deg, var(--paper) 0%, #fbf9f5 100%);
       color: var(--ink);
       font-size: 18px;
       line-height: 1.75;
       font-weight: 300;
     }
 
-    /* HEADER */
+    /* ANIMATED BACKGROUND PATTERN */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(212, 160, 23, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(26, 122, 110, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* HEADER WITH ANIMATION */
     header {
-      background: var(--ink);
+      background: linear-gradient(135deg, var(--ink) 0%, #2a2420 100%);
       color: var(--paper);
-      padding: 60px 40px;
+      padding: 80px 40px;
       text-align: center;
-      border-bottom: 2px solid var(--gold);
+      border-bottom: 3px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 5vw, 52px);
+      font-size: clamp(36px, 6vw, 56px);
       font-weight: 900;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       color: #fff;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(120deg, #fff, #d4a017, #fff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
     }
 
-    header p {
-      font-size: 17px;
-      color: rgba(250,248,244,0.7);
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+    }
+
+    header > p {
+      font-size: 18px;
+      color: rgba(250,248,244,0.8);
       max-width: 600px;
-      margin: 0 auto 16px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .author-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid rgba(250,248,244,0.2);
+      position: relative;
+      z-index: 1;
     }
 
     .author-info {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 1.5px;
+      font-size: 11px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 8px;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
     }
 
     .author-name {
       font-family: 'Playfair Display', serif;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.3s;
     }
 
     .author-title {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 2px;
-      color: rgba(250,248,244,0.6);
+      color: rgba(250,248,244,0.7);
       text-transform: uppercase;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* CONTAINER */
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 0 32px;
     }
 
-    /* INTRO SECTION */
+    /* INTRO SECTION WITH VISUAL */
     .intro-section {
-      padding: 60px 0;
-      border-bottom: 1px solid var(--line);
+      padding: 80px 0;
+      border-bottom: 2px solid var(--line);
+      position: relative;
     }
 
-    .intro-section h2 {
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .intro-content h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       color: var(--ink);
+      line-height: 1.2;
     }
 
-    .intro-section p {
+    .intro-content p {
       color: var(--ink-2);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.8;
+    }
+
+    .intro-visual {
+      position: relative;
+      height: 300px;
+    }
+
+    .visual-box {
+      position: absolute;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      animation: float 3s ease-in-out infinite;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .box1 {
+      width: 140px;
+      height: 140px;
+      background: linear-gradient(135deg, var(--accent) 0%, #e74c3c 100%);
+      top: 0;
+      left: 0;
+      animation-delay: 0s;
+    }
+
+    .box2 {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-2) 100%);
+      bottom: 40px;
+      right: 20px;
+      animation-delay: 0.3s;
+    }
+
+    .box3 {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--purple) 0%, #8e44ad 100%);
+      bottom: 0;
+      left: 40%;
+      animation-delay: 0.6s;
+    }
+
+    /* STATS */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, var(--paper-2) 0%, #f5f0e8 100%);
+      padding: 28px;
+      border-radius: 12px;
+      border-left: 4px solid var(--gold);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink-4);
     }
 
     /* ARTICLES GRID */
     .articles-section {
-      padding: 60px 0;
+      padding: 80px 0;
     }
 
-    .articles-section h2 {
+    .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
       color: var(--ink);
       text-align: center;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
     .articles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
       margin-bottom: 40px;
     }
 
     .article-card {
-      background: var(--paper-2);
+      background: linear-gradient(135deg, var(--paper-2) 0%, #fbf8f3 100%);
       border: 1px solid var(--paper-3);
-      border-radius: 12px;
-      padding: 28px 24px;
+      border-radius: 16px;
+      padding: 32px;
       transition: all 0.3s ease;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--gold), var(--teal));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .article-card:hover::before {
+      transform: scaleX(1);
     }
 
     .article-card:hover {
       border-color: var(--gold);
-      box-shadow: 0 8px 24px rgba(26,22,18,0.08);
-      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(26,22,18,0.12);
+      transform: translateY(-8px);
     }
 
     .article-card .card-tag {
@@ -160,15 +362,16 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: block;
+      font-weight: 600;
     }
 
     .article-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       color: var(--ink);
       line-height: 1.3;
     }
@@ -176,9 +379,9 @@
     .article-card p {
       color: var(--ink-3);
       font-size: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       flex: 1;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .article-meta {
@@ -188,59 +391,105 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: var(--ink-4);
-      padding-top: 16px;
+      padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
     .read-time { display: flex; align-items: center; gap: 6px; }
 
-    .cta-button {
+    .cta-badge {
       display: inline-block;
-      margin-top: auto;
-      color: var(--accent);
-      font-weight: 500;
-      transition: color 0.2s;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.2s;
     }
 
-    .article-card:hover .cta-button {
-      color: var(--accent-2);
+    .article-card:hover .cta-badge {
+      transform: scale(1.1);
     }
 
-    /* FEATURES */
+    /* FEATURES WITH ICONS */
     .features-section {
-      background: var(--paper-2);
-      padding: 60px 0;
-      margin: 60px 0;
-      border-radius: 12px;
+      background: linear-gradient(135deg, var(--paper-2) 0%, #f9f5ee 100%);
+      padding: 80px 0;
+      margin: 80px 0;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 160, 23, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
     }
 
     .features-section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 36px;
+      margin-bottom: 48px;
       text-align: center;
       color: var(--ink);
+      position: relative;
+      z-index: 1;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      position: relative;
+      z-index: 1;
     }
 
     .feature {
-      background: var(--paper);
-      padding: 24px;
-      border-radius: 8px;
-      border-left: 3px solid var(--gold);
+      background: rgba(255,255,255,0.8);
+      padding: 32px;
+      border-radius: 12px;
+      border-left: 4px solid var(--gold);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .feature:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .feature:nth-child(2) .feature-icon { animation-delay: 0.1s; }
+    .feature:nth-child(3) .feature-icon { animation-delay: 0.2s; }
+    .feature:nth-child(4) .feature-icon { animation-delay: 0.3s; }
+    .feature:nth-child(5) .feature-icon { animation-delay: 0.4s; }
+    .feature:nth-child(6) .feature-icon { animation-delay: 0.5s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .feature h4 {
       font-family: 'Playfair Display', serif;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: var(--ink);
     }
 
@@ -250,39 +499,73 @@
       line-height: 1.6;
     }
 
+    /* DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 60px 0;
+      justify-content: center;
+    }
+
+    .divider-line {
+      flex: 0 0 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .divider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
     /* FOOTER */
     footer {
-      background: var(--ink);
+      background: linear-gradient(135deg, var(--ink) 0%, #2a2420 100%);
       color: var(--paper);
-      padding: 40px;
+      padding: 48px 40px;
       text-align: center;
-      margin-top: 60px;
-      border-top: 2px solid var(--gold);
+      margin-top: 80px;
+      border-top: 3px solid var(--gold);
     }
 
     footer p {
       font-size: 14px;
-      color: rgba(250,248,244,0.6);
-      margin-bottom: 12px;
+      color: rgba(250,248,244,0.7);
+      margin-bottom: 14px;
     }
 
     footer a {
       color: var(--gold);
       text-decoration: none;
-      transition: color 0.2s;
+      transition: all 0.2s;
+      font-weight: 600;
     }
 
     footer a:hover {
       color: #fff;
+      text-decoration: underline;
     }
 
     /* RESPONSIVE */
-    @media (max-width: 640px) {
-      header { padding: 40px 24px; }
-      header h1 { font-size: 28px; }
+    @media (max-width: 768px) {
+      header { padding: 50px 24px; }
+      header h1 { font-size: 32px; }
       .container { padding: 0 20px; }
       .articles-grid { grid-template-columns: 1fr; }
-      .intro-section, .articles-section, .features-section { padding: 40px 0; }
+      .intro-grid { grid-template-columns: 1fr; }
+      .intro-section, .articles-section, .features-section { padding: 50px 0; }
+      .intro-visual { height: 200px; }
+      .stats-container { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 24px; }
+      .section-title { font-size: 28px; }
+      .article-card { padding: 20px; }
+      .stats-container { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -291,8 +574,8 @@
 <header>
   <h1>Reading Content</h1>
   <p>Deep-dive technical content with professional design and interactive elements</p>
-  <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(250,248,244,0.2);">
-    <div class="author-info">✦ By</div>
+  <div class="author-section">
+    <div class="author-info">✦ Curated By</div>
     <div class="author-name">Er. Rishabh Tripathi</div>
     <div class="author-title">AI Engineer</div>
   </div>
@@ -300,24 +583,53 @@
 
 <main class="container">
 
-  <!-- INTRO -->
+  <!-- INTRO SECTION WITH VISUAL -->
   <section class="intro-section">
-    <h2>Welcome</h2>
-    <p>This is a curated collection of comprehensive, well-researched technical articles designed for developers, architects, and anyone seeking deep understanding of complex systems.</p>
-    <p>Each article is thoughtfully structured with original diagrams, code examples, and interactive elements to make learning engaging and effective.</p>
+    <div class="intro-grid">
+      <div class="intro-content">
+        <h2>Welcome to Reading Content</h2>
+        <p>Discover comprehensive, well-researched technical articles designed for developers, architects, and innovators seeking deep understanding of complex systems.</p>
+        <p>Each article is thoughtfully structured with original diagrams, interactive elements, and real-world implementation details that go beyond surface-level tutorials.</p>
+        <div class="stats-container">
+          <div class="stat-box">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Deep Article</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Sections</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">28</div>
+            <div class="stat-label">Min Read</div>
+          </div>
+        </div>
+      </div>
+      <div class="intro-visual">
+        <div class="visual-box box1">Ideas</div>
+        <div class="visual-box box2">Learn</div>
+        <div class="visual-box box3">Build</div>
+      </div>
+    </div>
   </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
 
   <!-- ARTICLES -->
   <section class="articles-section">
-    <h2>Latest Articles</h2>
+    <h2 class="section-title">Featured Articles</h2>
     <div class="articles-grid">
       <a href="MCP_Server.html" class="article-card">
-        <span class="card-tag">Deep Dive · Protocol</span>
+        <span class="card-tag">🔹 Deep Dive · Protocol</span>
         <h3>Model Context Protocol: The Complete Guide</h3>
-        <p>Everything you need to understand, implement, and master MCP — the universal protocol connecting AI models to the real world. From zero to agentic systems.</p>
+        <p>Master MCP — the universal protocol connecting AI models to the real world. From zero to agentic systems with original diagrams and comprehensive analysis.</p>
         <div class="article-meta">
-          <span class="read-time">⏱ 28 min read</span>
-          <span>10 sections</span>
+          <span class="read-time">⏱ 28 min</span>
+          <span class="cta-badge">→ Read Article</span>
         </div>
       </a>
     </div>
@@ -329,27 +641,33 @@
       <h2>Why Read Here?</h2>
       <div class="features-grid">
         <div class="feature">
-          <h4>📚 In-Depth Coverage</h4>
+          <div class="feature-icon">📚</div>
+          <h4>In-Depth Coverage</h4>
           <p>Not surface-level tutorials. We go deep into architecture, design patterns, and real-world implementation details.</p>
         </div>
         <div class="feature">
-          <h4>📊 Original Diagrams</h4>
+          <div class="feature-icon">📊</div>
+          <h4>Original Diagrams</h4>
           <p>Hand-crafted SVG diagrams that make complex concepts clear and visual. No generic stock images.</p>
         </div>
         <div class="feature">
-          <h4>✨ Professional Design</h4>
+          <div class="feature-icon">✨</div>
+          <h4>Professional Design</h4>
           <p>Beautiful typography, responsive layout, and thoughtful UX make reading a pleasure on any device.</p>
         </div>
         <div class="feature">
-          <h4>🎯 Structured Learning</h4>
+          <div class="feature-icon">🎯</div>
+          <h4>Structured Learning</h4>
           <p>Table of contents with reading time estimates, key points summaries, and logical progression.</p>
         </div>
         <div class="feature">
-          <h4>⚡ Fast & Lightweight</h4>
+          <div class="feature-icon">⚡</div>
+          <h4>Fast & Lightweight</h4>
           <p>Pure HTML, CSS, and semantic markup. No unnecessary dependencies or bloat.</p>
         </div>
         <div class="feature">
-          <h4>🔗 Live Examples</h4>
+          <div class="feature-icon">🔗</div>
+          <h4>Live Examples</h4>
           <p>Explore interactive elements and code examples that illustrate the concepts in action.</p>
         </div>
       </div>
