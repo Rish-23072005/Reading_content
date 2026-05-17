@@ -3,891 +3,1387 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reading Content - Deep Technical Dives</title>
+  <title>Reading Content — Deep Technical Dives</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1a1612;
-      --ink-2: #3d3630;
-      --ink-3: #6b6058;
-      --ink-4: #9e9289;
-      --paper: #faf8f4;
-      --paper-2: #f2ede4;
-      --paper-3: #e8e0d2;
-      --accent: #c0392b;
-      --accent-2: #e74c3c;
-      --gold: #d4a017;
-      --teal: #1a7a6e;
-      --teal-2: #239b8c;
-      --purple: #6c3483;
-      --blue: #1a5276;
-      --line: rgba(26,22,18,0.12);
+      --white:      #ffffff;
+      --snow:       #f9f9fb;
+      --mist:       #f2f3f7;
+      --silver:     #e4e6ed;
+      --slate-100:  #d0d4de;
+      --slate-300:  #9da3b4;
+      --slate-500:  #6b7280;
+      --slate-700:  #374151;
+      --ink:        #0f1117;
+      --navy:       #0b1120;
+
+      /* Accent palette */
+      --cobalt:     #1a3cff;
+      --cobalt-mid: #3a5aff;
+      --cobalt-soft:#dde4ff;
+      --sage:       #1a8c6f;
+      --sage-soft:  #d6f0e9;
+      --amber:      #d97706;
+      --amber-soft: #fef3c7;
+      --rose:       #be123c;
+
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+      --radius-xl:  32px;
+
+      --shadow-xs:  0 1px 3px rgba(15,17,23,.06), 0 1px 2px rgba(15,17,23,.04);
+      --shadow-sm:  0 4px 12px rgba(15,17,23,.08), 0 1px 4px rgba(15,17,23,.04);
+      --shadow-md:  0 8px 28px rgba(15,17,23,.10), 0 2px 8px rgba(15,17,23,.04);
+      --shadow-lg:  0 20px 50px rgba(15,17,23,.12), 0 4px 16px rgba(15,17,23,.06);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
     body {
-      font-family: 'Source Serif 4', Georgia, serif;
-      background: linear-gradient(135deg, var(--paper) 0%, #fbf9f5 100%);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
       color: var(--ink);
-      font-size: 18px;
-      line-height: 1.75;
+      font-size: 17px;
+      line-height: 1.7;
       font-weight: 300;
     }
 
-    /* ANIMATED BACKGROUND PATTERN */
-    body::before {
-      content: '';
+    /* ──────────────────────────────────────────
+       TOPBAR
+    ────────────────────────────────────────── */
+    .topbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(212, 160, 23, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(26, 122, 110, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* ========== STUNNING HEADER ========== */
-    header {
-      background: linear-gradient(135deg, #0f0d0a 0%, #1a1612 50%, #2a2420 100%);
-      color: var(--paper);
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-      min-height: 600px;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--silver);
       display: flex;
       align-items: center;
-      justify-content: center;
+      padding: 0 48px;
     }
 
-    /* ANIMATED BACKGROUND ORBS */
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(212, 160, 23, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: floatOrb 8s ease-in-out infinite;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -5%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(26, 122, 110, 0.1) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: floatOrb 10s ease-in-out infinite reverse;
-    }
-
-    @keyframes floatOrb {
-      0%, 100% { transform: translate(0, 0); }
-      25% { transform: translate(30px, -30px); }
-      50% { transform: translate(0, -60px); }
-      75% { transform: translate(-30px, -30px); }
-    }
-
-    /* GRID PATTERN OVERLAY */
-    header .grid-overlay {
-      position: absolute;
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(0deg, transparent 24%, rgba(212, 160, 23, 0.05) 25%, rgba(212, 160, 23, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 160, 23, 0.05) 75%, rgba(212, 160, 23, 0.05) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(212, 160, 23, 0.05) 25%, rgba(212, 160, 23, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 160, 23, 0.05) 75%, rgba(212, 160, 23, 0.05) 76%, transparent 77%, transparent);
-      background-size: 80px 80px;
-      animation: gridMove 20s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(80px, 80px); }
+    .topbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--ink);
+      text-decoration: none;
     }
 
-    /* ANIMATED LINES */
-    header .animated-line {
-      position: absolute;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0.3;
+    .topbar-brand span {
+      color: var(--cobalt);
     }
 
-    .line1 {
-      width: 100%;
-      height: 1px;
-      top: 20%;
-      left: 0;
-      animation: lineSlide 4s ease-in-out infinite;
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
     }
 
-    .line2 {
-      width: 100%;
-      height: 1px;
-      top: 50%;
-      left: 0;
-      animation: lineSlide 5s ease-in-out infinite reverse;
+    .topbar-nav a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.4px;
+      color: var(--slate-500);
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
-    .line3 {
-      width: 1px;
-      height: 100%;
-      left: 25%;
-      top: 0;
-      animation: lineSlideV 6s ease-in-out infinite;
+    .topbar-nav a:hover { color: var(--ink); }
+
+    .topbar-cta {
+      background: var(--ink) !important;
+      color: var(--white) !important;
+      padding: 9px 20px !important;
+      border-radius: var(--radius-sm);
+      font-weight: 500 !important;
+      letter-spacing: 0.3px !important;
+      transition: background 0.2s, transform 0.2s !important;
     }
 
-    .line4 {
-      width: 1px;
-      height: 100%;
-      right: 25%;
-      top: 0;
-      animation: lineSlideV 7s ease-in-out infinite reverse;
+    .topbar-cta:hover {
+      background: var(--cobalt) !important;
+      transform: translateY(-1px);
     }
 
-    @keyframes lineSlide {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.4; }
-    }
-
-    @keyframes lineSlideV {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* HEADER CONTENT */
-    .header-content {
+    /* ──────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────── */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 100px;
       position: relative;
-      z-index: 10;
-      text-align: center;
-      padding: 80px 40px;
-      max-width: 900px;
+      overflow: hidden;
     }
 
-    /* BADGE */
-    .header-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(212, 160, 23, 0.2), rgba(26, 122, 110, 0.2));
-      border: 1px solid rgba(212, 160, 23, 0.5);
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
+    /* Subtle grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--silver) 1px, transparent 1px),
+        linear-gradient(90deg, var(--silver) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 100%);
+    }
+
+    /* Gradient orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .orb-blue {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,60,255,0.08) 0%, transparent 70%);
+      top: -200px; right: -100px;
+      animation: driftA 14s ease-in-out infinite;
+    }
+
+    .orb-sage {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(26,140,111,0.06) 0%, transparent 70%);
+      bottom: -100px; left: -80px;
+      animation: driftB 18s ease-in-out infinite;
+    }
+
+    @keyframes driftA {
+      0%,100% { transform: translate(0,0); }
+      33% { transform: translate(-40px, 30px); }
+      66% { transform: translate(30px, -20px); }
+    }
+
+    @keyframes driftB {
+      0%,100% { transform: translate(0,0); }
+      33% { transform: translate(30px, -20px); }
+      66% { transform: translate(-20px, 30px); }
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* eyebrow label */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cobalt-soft);
+      color: var(--cobalt);
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      animation: fadeInDown 0.8s ease forwards;
-      backdrop-filter: blur(10px);
+      margin-bottom: 36px;
+      animation: fadeUp 0.7s ease both;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cobalt);
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    /* MAIN TITLE WITH GLOW */
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(48px, 8vw, 72px);
-      font-weight: 900;
-      margin: 20px 0 30px;
-      line-height: 1.1;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-      animation-delay: 0.2s;
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
     }
 
-    header h1 .text-gradient {
-      background: linear-gradient(120deg, #fff 0%, var(--gold) 25%, #fff 50%, var(--teal) 75%, #fff 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: textGradient 4s linear infinite;
-      display: block;
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--ink);
+      max-width: 800px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.1s ease both;
     }
 
-    @keyframes textGradient {
-      0% { background-position: 0% center; }
-      100% { background-position: 200% center; }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--cobalt);
     }
 
-    /* TEXT SHADOW GLOW */
-    header h1 {
-      text-shadow: 
-        0 0 20px rgba(212, 160, 23, 0.3),
-        0 0 40px rgba(26, 122, 110, 0.2);
-      filter: drop-shadow(0 0 10px rgba(212, 160, 23, 0.2));
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* SUBTITLE WITH TYPING EFFECT */
-    .header-subtitle {
+    .hero-sub {
       font-size: 18px;
-      color: rgba(250, 248, 244, 0.85);
-      max-width: 700px;
-      margin: 0 auto 40px;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-      animation-delay: 0.4s;
-      line-height: 1.8;
+      color: var(--slate-500);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 52px;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 15px 28px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      background: var(--cobalt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(26,60,255,0.25);
+    }
+
+    .btn-primary svg {
+      transition: transform 0.2s;
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--slate-700);
+      font-size: 15px;
+      font-weight: 400;
+      text-decoration: none;
+      padding: 15px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--silver);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--slate-300);
+      background: var(--mist);
+      color: var(--ink);
+    }
+
+    /* hero decoration: floating code card */
+    .hero-decoration {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 420px;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    .code-card {
+      background: var(--white);
+      border: 1px solid var(--silver);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .code-card-header {
+      background: var(--mist);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--silver);
+    }
+
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+
+    .code-card-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--slate-300);
+      margin-left: 8px;
       letter-spacing: 0.5px;
     }
 
-    /* AUTHOR CARD */
-    .author-card {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(26, 122, 110, 0.15), rgba(212, 160, 23, 0.1));
-      border: 1px solid rgba(212, 160, 23, 0.3);
-      border-radius: 12px;
-      padding: 24px 32px;
-      backdrop-filter: blur(10px);
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-      animation-delay: 0.6s;
-      position: relative;
-      overflow: hidden;
+    .code-body {
+      padding: 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: var(--slate-700);
     }
 
-    .author-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      animation: shimmerAnim 2s infinite;
-    }
+    .code-line { display: flex; gap: 16px; }
+    .ln { color: var(--slate-100); user-select: none; min-width: 16px; text-align: right; }
+    .kw  { color: #1a3cff; }
+    .fn  { color: #1a8c6f; }
+    .str { color: #d97706; }
+    .cm  { color: var(--slate-300); font-style: italic; }
+    .pu  { color: var(--slate-500); }
 
-    @keyframes shimmerAnim {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    .author-info {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .author-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .author-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      color: rgba(250, 248, 244, 0.8);
-      text-transform: uppercase;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* SCROLL INDICATOR */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    .scroll-icon {
-      width: 24px;
-      height: 40px;
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      position: relative;
+    .code-card-footer {
+      padding: 16px 24px;
+      background: var(--mist);
+      border-top: 1px solid var(--silver);
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
     }
 
-    .scroll-icon::after {
+    .cf-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--sage);
+      font-weight: 500;
+    }
+
+    .cf-badge::before {
       content: '';
-      width: 2px;
-      height: 8px;
-      background: var(--gold);
-      border-radius: 1px;
-      animation: scrollDot 2s ease-in-out infinite;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--sage);
     }
 
-    @keyframes scrollDot {
-      0%, 100% { opacity: 1; transform: translateY(-5px); }
-      50% { opacity: 0.3; transform: translateY(5px); }
+    .cf-read {
+      font-size: 12px;
+      color: var(--slate-300);
+      font-family: 'DM Mono', monospace;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* CONTAINER */
-    .container {
-      max-width: 1000px;
+    /* ──────────────────────────────────────────
+       SOCIAL PROOF / METRICS STRIP
+    ────────────────────────────────────────── */
+    .metrics-strip {
+      border-top: 1px solid var(--silver);
+      border-bottom: 1px solid var(--silver);
+      padding: 32px 0;
+      background: var(--snow);
+    }
+
+    .metrics-inner {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
     }
 
-    /* INTRO SECTION WITH VISUAL */
-    .intro-section {
+    .metric {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .metric-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--slate-500);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      line-height: 1.4;
+    }
+
+    .metrics-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--silver);
+    }
+
+    .metrics-byline {
+      font-size: 13px;
+      color: var(--slate-500);
+      font-style: italic;
+      max-width: 220px;
+    }
+
+    /* ──────────────────────────────────────────
+       ABOUT AUTHOR STRIPE
+    ────────────────────────────────────────── */
+    .author-stripe {
       padding: 80px 0;
-      border-bottom: 2px solid var(--line);
-      position: relative;
+      background: var(--white);
     }
 
-    .intro-grid {
+    .author-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
+      gap: 80px;
       align-items: center;
     }
 
-    .intro-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    .intro-content p {
-      color: var(--ink-2);
-      margin-bottom: 18px;
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .intro-visual {
-      position: relative;
-      height: 300px;
-    }
-
-    .visual-box {
-      position: absolute;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-      animation: float 3s ease-in-out infinite;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .box1 {
-      width: 140px;
-      height: 140px;
-      background: linear-gradient(135deg, var(--accent) 0%, #e74c3c 100%);
-      top: 0;
-      left: 0;
-      animation-delay: 0s;
-    }
-
-    .box2 {
-      width: 120px;
-      height: 120px;
-      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-2) 100%);
-      bottom: 40px;
-      right: 20px;
-      animation-delay: 0.3s;
-    }
-
-    .box3 {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, var(--purple) 0%, #8e44ad 100%);
-      bottom: 0;
-      left: 40%;
-      animation-delay: 0.6s;
-    }
-
-    /* STATS */
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
-      margin: 40px 0;
-    }
-
-    .stat-box {
-      background: linear-gradient(135deg, var(--paper-2) 0%, #f5f0e8 100%);
-      padding: 28px;
-      border-radius: 12px;
-      border-left: 4px solid var(--gold);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .stat-box:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    }
-
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 900;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-family: 'JetBrains Mono', monospace;
+    .author-left .section-label {
+      font-family: 'DM Mono', monospace;
       font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--ink-4);
-    }
-
-    /* ARTICLES GRID */
-    .articles-section {
-      padding: 80px 0;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 48px;
-      color: var(--ink);
-      text-align: center;
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
-      margin-bottom: 40px;
-    }
-
-    .article-card {
-      background: linear-gradient(135deg, var(--paper-2) 0%, #fbf8f3 100%);
-      border: 1px solid var(--paper-3);
-      border-radius: 16px;
-      padding: 32px;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .article-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--gold), var(--teal));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .article-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .article-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 20px 40px rgba(26,22,18,0.12);
-      transform: translateY(-8px);
-    }
-
-    .article-card .card-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-      display: block;
-      font-weight: 600;
-    }
-
-    .article-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      color: var(--ink);
-      line-height: 1.3;
-    }
-
-    .article-card p {
-      color: var(--ink-3);
-      font-size: 14px;
+      color: var(--cobalt);
       margin-bottom: 20px;
-      flex: 1;
-      line-height: 1.7;
+      display: block;
     }
 
-    .article-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--ink-4);
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-
-    .read-time { display: flex; align-items: center; gap: 6px; }
-
-    .cta-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: white;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 11px;
+    .author-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
       font-weight: 600;
-      transition: all 0.2s;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 24px;
     }
 
-    .article-card:hover .cta-badge {
-      transform: scale(1.1);
+    .author-left p {
+      font-size: 16px;
+      color: var(--slate-500);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-weight: 300;
     }
 
-    /* FEATURES WITH ICONS */
-    .features-section {
-      background: linear-gradient(135deg, var(--paper-2) 0%, #f9f5ee 100%);
-      padding: 80px 0;
-      margin: 80px 0;
-      border-radius: 20px;
+    .author-right {
+      position: relative;
+    }
+
+    .author-card-pro {
+      background: var(--white);
+      border: 1px solid var(--silver);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    /* vertical accent bar */
+    .author-card-pro::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 40px; bottom: 40px;
+      width: 3px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--cobalt), var(--sage));
+    }
+
+    .acp-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      margin-bottom: 10px;
+    }
+
+    .acp-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .acp-title {
+      font-size: 15px;
+      color: var(--slate-500);
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    .acp-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .pill-blue  { background: var(--cobalt-soft); color: var(--cobalt); }
+    .pill-green { background: var(--sage-soft);   color: var(--sage); }
+    .pill-amber { background: var(--amber-soft);  color: var(--amber); }
+    .pill-grey  { background: var(--mist);        color: var(--slate-700); }
+
+    .acp-divider {
+      height: 1px;
+      background: var(--silver);
+      margin: 28px 0;
+    }
+
+    .acp-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .acp-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .acp-stat-label {
+      font-size: 11px;
+      color: var(--slate-500);
+      letter-spacing: 0.3px;
+    }
+
+    /* ──────────────────────────────────────────
+       ARTICLES SECTION
+    ────────────────────────────────────────── */
+    .articles-wrap {
+      padding: 100px 0;
+      background: var(--snow);
+      border-top: 1px solid var(--silver);
+    }
+
+    .section-header {
+      max-width: 1200px;
+      margin: 0 auto 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .section-header-left .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-header-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+    }
+
+    .section-header-right {
+      font-size: 14px;
+      color: var(--slate-500);
+      max-width: 260px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .articles-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    /* Featured card — large format */
+    .article-featured {
+      background: var(--white);
+      border: 1px solid var(--silver);
+      border-radius: var(--radius-xl);
+      padding: 52px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
       position: relative;
       overflow: hidden;
     }
 
-    .features-section::before {
+    .article-featured::after {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(212, 160, 23, 0.1) 0%, transparent 70%);
-      border-radius: 50%;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--cobalt), var(--sage));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s ease;
     }
 
-    .features-section h2 {
-      font-family: 'Playfair Display', serif;
+    .article-featured:hover::after { transform: scaleY(1); }
+
+    .article-featured:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--slate-100);
+    }
+
+    .af-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cobalt-soft);
+      color: var(--cobalt);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .af-title {
+      font-family: 'Cormorant Garamond', serif;
       font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 48px;
-      text-align: center;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
       color: var(--ink);
-      position: relative;
-      z-index: 1;
+      margin-bottom: 16px;
+    }
+
+    .af-desc {
+      font-size: 15px;
+      color: var(--slate-500);
+      line-height: 1.75;
+      max-width: 580px;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .af-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .af-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--slate-500);
+      letter-spacing: 0.3px;
+    }
+
+    .af-meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--slate-100);
+    }
+
+    .af-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .af-read-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-align: center;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      box-shadow: var(--shadow-sm);
+      gap: 4px;
+    }
+
+    .af-read-btn:hover {
+      background: var(--cobalt);
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(26,60,255,0.25);
+    }
+
+    .af-read-btn svg {
+      margin-bottom: 2px;
+    }
+
+    /* Topics bar */
+    .af-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .topic-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border: 1px solid var(--silver);
+      border-radius: 100px;
+      font-size: 12px;
+      color: var(--slate-500);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      background: var(--white);
+    }
+
+    /* ──────────────────────────────────────────
+       WHAT'S INSIDE
+    ────────────────────────────────────────── */
+    .inside-wrap {
+      padding: 100px 0;
+      background: var(--white);
+    }
+
+    .inside-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .inside-header {
+      margin-bottom: 64px;
+    }
+
+    .inside-header .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .inside-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--ink);
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .feature-card {
+      padding: 40px;
+      border: 1px solid var(--silver);
+      background: var(--white);
+      transition: background 0.25s, box-shadow 0.25s;
       position: relative;
+    }
+
+    .feature-card:hover {
+      background: var(--snow);
+      box-shadow: inset 0 0 0 1px var(--slate-100);
       z-index: 1;
     }
 
-    .feature {
-      background: rgba(255,255,255,0.8);
-      padding: 32px;
-      border-radius: 12px;
-      border-left: 4px solid var(--gold);
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+    /* rounded corners on grid corners */
+    .feature-card:nth-child(1) { border-radius: var(--radius-lg) 0 0 0; }
+    .feature-card:nth-child(3) { border-radius: 0 var(--radius-lg) 0 0; }
+    .feature-card:nth-child(4) { border-radius: 0 0 0 var(--radius-lg); }
+    .feature-card:nth-child(6) { border-radius: 0 0 var(--radius-lg) 0; }
+
+    .fc-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
     }
 
-    .feature:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.95);
-    }
+    .fc-icon-blue   { background: var(--cobalt-soft); }
+    .fc-icon-green  { background: var(--sage-soft); }
+    .fc-icon-amber  { background: var(--amber-soft); }
+    .fc-icon-silver { background: var(--mist); }
 
-    .feature-icon {
-      font-size: 32px;
+    .fc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
       margin-bottom: 12px;
-      display: inline-block;
-      animation: bounce 2s ease-in-out infinite;
+      letter-spacing: -0.2px;
     }
 
-    .feature:nth-child(2) .feature-icon { animation-delay: 0.1s; }
-    .feature:nth-child(3) .feature-icon { animation-delay: 0.2s; }
-    .feature:nth-child(4) .feature-icon { animation-delay: 0.3s; }
-    .feature:nth-child(5) .feature-icon { animation-delay: 0.4s; }
-    .feature:nth-child(6) .feature-icon { animation-delay: 0.5s; }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .fc-desc {
+      font-size: 14px;
+      color: var(--slate-500);
+      line-height: 1.7;
+      font-weight: 300;
     }
 
-    .feature h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
+    /* ──────────────────────────────────────────
+       CTA BANNER
+    ────────────────────────────────────────── */
+    .cta-wrap {
+      padding: 0 48px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cta-banner {
+      background: var(--navy);
+      border-radius: var(--radius-xl);
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(26,60,255,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%; left: 30%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(26,140,111,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-content { position: relative; z-index: 1; }
+
+    .cta-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 200px;
+    }
+
+    .cta-btn-main {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 15px 28px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .cta-btn-main:hover {
+      background: var(--cobalt);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-sub {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .cta-btn-sub:hover {
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ──────────────────────────────────────────
+       FOOTER
+    ────────────────────────────────────────── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--silver);
+      padding: 48px 0;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
       color: var(--ink);
     }
 
-    .feature p {
-      font-size: 14px;
-      color: var(--ink-3);
-      line-height: 1.6;
+    .footer-brand span { color: var(--cobalt); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--slate-500);
+      margin-top: 4px;
     }
 
-    /* DIVIDER */
-    .divider {
+    .footer-links {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin: 60px 0;
-      justify-content: center;
+      gap: 28px;
     }
 
-    .divider-line {
-      flex: 0 0 60px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold));
-    }
-
-    .divider-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-    }
-
-    /* FOOTER */
-    footer {
-      background: linear-gradient(135deg, var(--ink) 0%, #2a2420 100%);
-      color: var(--paper);
-      padding: 48px 40px;
-      text-align: center;
-      margin-top: 80px;
-      border-top: 3px solid var(--gold);
-    }
-
-    footer p {
-      font-size: 14px;
-      color: rgba(250,248,244,0.7);
-      margin-bottom: 14px;
-    }
-
-    footer a {
-      color: var(--gold);
+    .footer-links a {
+      font-size: 13px;
+      color: var(--slate-500);
       text-decoration: none;
-      transition: all 0.2s;
-      font-weight: 600;
+      transition: color 0.2s;
+      font-weight: 400;
     }
 
-    footer a:hover {
-      color: #fff;
-      text-decoration: underline;
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ──────────────────────────────────────────
+       RESPONSIVE
+    ────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero-decoration { display: none; }
+      .hero-headline { max-width: 100%; }
+      .author-inner { grid-template-columns: 1fr; gap: 48px; }
     }
 
-    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-card:nth-child(1) { border-radius: var(--radius-lg) 0 0 0; }
+      .feature-card:nth-child(2) { border-radius: 0 var(--radius-lg) 0 0; }
+      .feature-card:nth-child(5) { border-radius: 0 0 0 var(--radius-lg); }
+      .feature-card:nth-child(6) { border-radius: 0 0 var(--radius-lg) 0; }
+      .article-featured { grid-template-columns: 1fr; }
+      .af-right { flex-direction: row; }
+      .cta-banner { grid-template-columns: 1fr; padding: 48px 40px; }
+      .cta-actions { flex-direction: row; flex-wrap: wrap; }
+    }
+
     @media (max-width: 768px) {
-      header { min-height: 500px; padding: 40px 24px; }
-      .header-content { padding: 60px 24px; }
-      header h1 { font-size: 36px; }
-      .container { padding: 0 20px; }
-      .articles-grid { grid-template-columns: 1fr; }
-      .intro-grid { grid-template-columns: 1fr; }
-      .intro-section, .articles-section, .features-section { padding: 50px 0; }
-      .intro-visual { height: 200px; }
-      .stats-container { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 480px) {
-      header { min-height: 450px; }
-      header h1 { font-size: 28px; }
-      .header-subtitle { font-size: 14px; }
-      .section-title { font-size: 28px; }
-      .article-card { padding: 20px; }
-      .stats-container { grid-template-columns: 1fr; }
+      .topbar { padding: 0 24px; }
+      .topbar-nav { display: none; }
+      .hero-inner,
+      .author-inner,
+      .section-header,
+      .articles-list,
+      .inside-inner,
+      .cta-wrap,
+      .footer-inner { padding: 0 24px; }
+      .hero { padding-top: 100px; padding-bottom: 60px; }
+      .hero-headline { font-size: 40px; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .section-header-right { text-align: left; max-width: 100%; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { border-radius: 0 !important; }
+      .feature-card:first-child { border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important; }
+      .feature-card:last-child  { border-radius: 0 0 var(--radius-lg) var(--radius-lg) !important; }
+      .af-title { font-size: 26px; }
+      .article-featured { padding: 32px 24px; }
+      .metrics-inner { justify-content: flex-start; gap: 32px; }
+      .metrics-divider { display: none; }
+      .acp-stats { grid-template-columns: repeat(2, 1fr); }
+      .cta-banner { padding: 40px 24px; }
+      .cta-title { font-size: 32px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="grid-overlay"></div>
-  <div class="animated-line line1"></div>
-  <div class="animated-line line2"></div>
-  <div class="animated-line line3"></div>
-  <div class="animated-line line4"></div>
-
-  <div class="header-content">
-    <div class="header-badge">✦ Deep Technical Content Platform</div>
-    <h1><span class="text-gradient">Reading Content</span></h1>
-    <p class="header-subtitle">Explore profound insights into AI protocols, system design, and cutting-edge technologies through meticulously crafted articles with original diagrams and interactive elements.</p>
-    
-    <div class="author-card">
-      <div class="author-info">Curated By</div>
-      <div class="author-name">Er. Rishabh Tripathi</div>
-      <div class="author-title">AI Engineer</div>
+<!-- ── TOPBAR ──────────────────────────────── -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="#" class="topbar-brand">Reading<span>.</span></a>
+    <div class="topbar-nav">
+      <a href="#articles">Articles</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/Rish-23072005/Reading_content">GitHub</a>
+      <a href="MCP_Server.html" class="topbar-cta">Start Reading →</a>
     </div>
   </div>
+</nav>
 
-  <div class="scroll-indicator">
-    <div class="scroll-icon"></div>
-  </div>
-</header>
+<!-- ── HERO ───────────────────────────────── -->
+<section class="hero">
+  <div class="hero-orb orb-blue"></div>
+  <div class="hero-orb orb-sage"></div>
 
-<main class="container">
-
-  <!-- INTRO SECTION WITH VISUAL -->
-  <section class="intro-section">
-    <div class="intro-grid">
-      <div class="intro-content">
-        <h2>Welcome to Reading Content</h2>
-        <p>Discover comprehensive, well-researched technical articles designed for developers, architects, and innovators seeking deep understanding of complex systems.</p>
-        <p>Each article is thoughtfully structured with original diagrams, interactive elements, and real-world implementation details that go beyond surface-level tutorials.</p>
-        <div class="stats-container">
-          <div class="stat-box">
-            <div class="stat-number">1</div>
-            <div class="stat-label">Deep Article</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number">10</div>
-            <div class="stat-label">Sections</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number">28</div>
-            <div class="stat-label">Min Read</div>
-          </div>
-        </div>
-      </div>
-      <div class="intro-visual">
-        <div class="visual-box box1">Ideas</div>
-        <div class="visual-box box2">Learn</div>
-        <div class="visual-box box3">Build</div>
-      </div>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      Deep Technical Content Platform
     </div>
-  </section>
 
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-dot"></div>
-    <div class="divider-line"></div>
-  </div>
+    <h1 class="hero-headline">
+      Technical writing<br>at its <em>finest.</em>
+    </h1>
 
-  <!-- ARTICLES -->
-  <section class="articles-section">
-    <h2 class="section-title">Featured Articles</h2>
-    <div class="articles-grid">
-      <a href="MCP_Server.html" class="article-card">
-        <span class="card-tag">🔹 Deep Dive · Protocol</span>
-        <h3>Model Context Protocol: The Complete Guide</h3>
-        <p>Master MCP — the universal protocol connecting AI models to the real world. From zero to agentic systems with original diagrams and comprehensive analysis.</p>
-        <div class="article-meta">
-          <span class="read-time">⏱ 28 min</span>
-          <span class="cta-badge">→ Read Article</span>
-        </div>
+    <p class="hero-sub">
+      Explore exhaustive, well-researched articles on AI protocols, system design, and emerging technologies — with original diagrams and implementation depth you won't find elsewhere.
+    </p>
+
+    <div class="hero-actions">
+      <a href="MCP_Server.html" class="btn-primary">
+        Read the Article
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#about" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 7.5v4M8 5.5v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        About this project
       </a>
     </div>
-  </section>
+  </div>
 
-  <!-- FEATURES -->
-  <section class="features-section">
-    <div class="container">
-      <h2>Why Read Here?</h2>
-      <div class="features-grid">
-        <div class="feature">
-          <div class="feature-icon">📚</div>
-          <h4>In-Depth Coverage</h4>
-          <p>Not surface-level tutorials. We go deep into architecture, design patterns, and real-world implementation details.</p>
+  <!-- Floating code card -->
+  <div class="hero-decoration">
+    <div class="code-card">
+      <div class="code-card-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-card-title">mcp_client.py</span>
+      </div>
+      <div class="code-body">
+        <div class="code-line"><span class="ln">1</span><span class="cm"># Model Context Protocol</span></div>
+        <div class="code-line"><span class="ln">2</span><span class="kw">from</span> <span class="fn">mcp</span> <span class="kw">import</span> <span class="pu">ClientSession</span></div>
+        <div class="code-line"><span class="ln">3</span></div>
+        <div class="code-line"><span class="ln">4</span><span class="kw">async def</span> <span class="fn">connect</span><span class="pu">(</span>url<span class="pu">):</span></div>
+        <div class="code-line"><span class="ln">5</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="pu">async with</span> <span class="fn">ClientSession</span><span class="pu">(</span></div>
+        <div class="code-line"><span class="ln">6</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url<span class="pu">=</span><span class="str">"stdio://server"</span></div>
+        <div class="code-line"><span class="ln">7</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="pu">) as</span> session<span class="pu">:</span></div>
+        <div class="code-line"><span class="ln">8</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">await</span> session<span class="pu">.</span><span class="fn">initialize</span><span class="pu">()</span></div>
+        <div class="code-line"><span class="ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools <span class="pu">=</span> <span class="kw">await</span> session<span class="pu">.</span><span class="fn">list_tools</span><span class="pu">()</span></div>
+        <div class="code-line"><span class="ln">10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> tools</div>
+      </div>
+      <div class="code-card-footer">
+        <span class="cf-badge">Python 3.11</span>
+        <span class="cf-read">28 min article →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── METRICS STRIP ──────────────────────── -->
+<div class="metrics-strip">
+  <div class="metrics-inner">
+    <div class="metric">
+      <div class="metric-num">1</div>
+      <div class="metric-label">Flagship<br>Article</div>
+    </div>
+    <div class="metrics-divider"></div>
+    <div class="metric">
+      <div class="metric-num">10</div>
+      <div class="metric-label">In-depth<br>Sections</div>
+    </div>
+    <div class="metrics-divider"></div>
+    <div class="metric">
+      <div class="metric-num">28</div>
+      <div class="metric-label">Minutes<br>to Read</div>
+    </div>
+    <div class="metrics-divider"></div>
+    <div class="metric">
+      <div class="metric-num">∞</div>
+      <!-- <div class="metric-label">Original<br>Diagrams</div> -->
+    </div>
+    <div class="metrics-divider"></div>
+    <p class="metrics-byline">"Go beyond tutorials. Understand systems from first principles."</p>
+  </div>
+</div>
+
+<!-- ── ABOUT AUTHOR ──────────────────────── -->
+<section class="author-stripe" id="about">
+  <div class="author-inner">
+    <div class="author-left">
+      <span class="section-label">The Author</span>
+      <h2>Written by a practitioner,<br>for practitioners.</h2>
+      <p>Every article on this platform comes from lived engineering experience — not from skimming documentation and rephrasing it.</p>
+      <p>The goal is simple: produce the resource I wish had existed when I was figuring this out myself.</p>
+    </div>
+    <div class="author-right">
+      <div class="author-card-pro">
+        <div class="acp-role">Author &amp; Engineer</div>
+        <div class="acp-name">Er. Rishabh Tripathi</div>
+        <div class="acp-title">AI Engineer · Data Scientist/div>
+        <div class="acp-skills">
+          <span class="skill-pill pill-blue">AI / ML Systems</span>
+          <span class="skill-pill pill-green">MCP Protocol</span>
+          <span class="skill-pill pill-amber">System Design</span>
+          <span class="skill-pill pill-grey">Python</span>
+          <!-- <span class="skill-pill pill-grey">TypeScript</span> -->
+          <span class="skill-pill pill-grey">Distributed Systems</span>
         </div>
-        <div class="feature">
-          <div class="feature-icon">📊</div>
-          <h4>Original Diagrams</h4>
-          <p>Hand-crafted SVG diagrams that make complex concepts clear and visual. No generic stock images.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">✨</div>
-          <h4>Professional Design</h4>
-          <p>Beautiful typography, responsive layout, and thoughtful UX make reading a pleasure on any device.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🎯</div>
-          <h4>Structured Learning</h4>
-          <p>Table of contents with reading time estimates, key points summaries, and logical progression.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">⚡</div>
-          <h4>Fast & Lightweight</h4>
-          <p>Pure HTML, CSS, and semantic markup. No unnecessary dependencies or bloat.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🔗</div>
-          <h4>Live Examples</h4>
-          <p>Explore interactive elements and code examples that illustrate the concepts in action.</p>
+        <div class="acp-divider"></div>
+        <div class="acp-stats">
+          <div>
+            <div class="acp-stat-num">28+</div>
+            <div class="acp-stat-label">Min deep-dive</div>
+          </div>
+          <div>
+            <div class="acp-stat-num">100%</div>
+            <div class="acp-stat-label">Original content</div>
+          </div>
+          <div>
+            <div class="acp-stat-num">Free</div>
+            <div class="acp-stat-label">Always open</div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</main>
+<!-- ── ARTICLES ───────────────────────────── -->
+<section class="articles-wrap" id="articles">
+  <div class="section-header">
+    <div class="section-header-left">
+      <span class="label">Library</span>
+      <h2>Featured Articles</h2>
+    </div>
+    <div class="section-header-right">
+      Carefully structured for progressive understanding — from conceptual foundations to production implementation.
+    </div>
+  </div>
 
+  <div class="articles-list">
+    <a href="MCP_Server.html" class="article-featured">
+      <div class="af-left">
+        <div class="af-tag">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+          Deep Dive · Protocol · AI Systems
+        </div>
+        <h3 class="af-title">Model Context Protocol:<br>The Complete Engineer's Guide</h3>
+        <p class="af-desc">
+          Master MCP — the universal open protocol connecting AI models to the real world. Covers architecture, transport layers, tool schemas, agentic patterns, and production deployment. Built with original diagrams and working code.
+        </p>
+        <div class="af-meta">
+          <span class="af-meta-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            28 min read
+          </span>
+          <span class="af-meta-dot"></span>
+          <span class="af-meta-item">10 sections</span>
+          <span class="af-meta-dot"></span>
+          <span class="af-meta-item">Original diagrams</span>
+        </div>
+        <br>
+        <div class="af-topics">
+          <span class="topic-chip">MCP Architecture</span>
+          <span class="topic-chip">Tool Schemas</span>
+          <span class="topic-chip">Agentic Systems</span>
+          <span class="topic-chip">JSON-RPC 2.0</span>
+          <span class="topic-chip">Python SDK</span>
+        </div>
+      </div>
+      <div class="af-right">
+        <div class="af-read-btn">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Read<br>Now
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── WHAT'S INSIDE ─────────────────────── -->
+<section class="inside-wrap">
+  <div class="inside-inner">
+    <div class="inside-header">
+      <span class="label">Why this platform</span>
+      <h2>Engineered for depth,<br>not engagement metrics.</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-blue">📚</div>
+        <div class="fc-title">First-Principles Depth</div>
+        <p class="fc-desc">Not surface tutorials. We start from why, move through how, and arrive at production-grade implementation details with full context.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-green">📐</div>
+        <div class="fc-title">Original Diagrams</div>
+        <p class="fc-desc">Hand-crafted SVG architecture diagrams built specifically for each concept. No recycled stock visuals — every illustration is purpose-made.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-amber">✦</div>
+        <div class="fc-title">Typographic Excellence</div>
+        <p class="fc-desc">Beautiful, responsive layout with carefully chosen typefaces, proper reading measure, and optimised line-spacing for long-form content.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-silver">⚡</div>
+        <div class="fc-title">Zero Dependencies</div>
+        <p class="fc-desc">Pure semantic HTML and CSS. No frameworks, no tracking, no paywalls. Just fast, accessible content that works on any device.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-blue">🗂️</div>
+        <div class="fc-title">Structured Progression</div>
+        <p class="fc-desc">Table of contents, reading-time estimates, section summaries, and key-point callouts guide you through complex material without overwhelm.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon fc-icon-green">🔗</div>
+        <div class="fc-title">Working Code Examples</div>
+        <p class="fc-desc">Syntax-highlighted, copy-ready code samples that are tested and reflect real implementation patterns — not just illustrative pseudocode.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ───────────────────────── -->
+<!-- <div class="cta-wrap">
+  <div class="cta-banner">
+    <div class="cta-content">
+      <span class="cta-label">Ready to go deep?</span>
+      <h2 class="cta-title">Start with the MCP<br>complete guide.</h2>
+      <p class="cta-desc">28 minutes. 10 sections. Everything you need to understand and build with the Model Context Protocol — from protocol internals to production agentic systems.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="MCP_Server.html" class="cta-btn-main">
+        Read the Article
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://github.com/Rish-23072005/Reading_content" class="cta-btn-sub">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div> -->
+
+<!-- ── FOOTER ────────────────────────────── -->
 <footer>
-  <p>&copy; 2026 Reading Content by Er. Rishabh Tripathi. All articles freely available.</p>
-  <p><a href="https://github.com/Rish-23072005/Reading_content">GitHub Repository</a> · <a href="https://reading-content.vercel.app">Live Preview</a></p>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Reading<span>.</span></div>
+      <div class="footer-copy">© 2026 Er. Rishabh Tripathi · All articles freely available</div>
+    </div>
+    <div class="footer-links">
+      <a href="MCP_Server.html">MCP Guide</a>
+      <a href="https://github.com/Rish-23072005/Reading_content">GitHub</a>
+      <a href="https://reading-content.vercel.app">Live Preview</a>
+    </div>
+  </div>
 </footer>
 
 </body>
