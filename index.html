@@ -53,109 +53,301 @@
       z-index: -1;
     }
 
-    /* HEADER WITH ANIMATION */
+    /* ========== STUNNING HEADER ========== */
     header {
-      background: linear-gradient(135deg, var(--ink) 0%, #2a2420 100%);
+      background: linear-gradient(135deg, #0f0d0a 0%, #1a1612 50%, #2a2420 100%);
       color: var(--paper);
-      padding: 80px 40px;
-      text-align: center;
-      border-bottom: 3px solid var(--gold);
+      padding: 0;
       position: relative;
       overflow: hidden;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    /* ANIMATED BACKGROUND ORBS */
     header::before {
       content: '';
       position: absolute;
-      top: 0;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212, 160, 23, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(26, 122, 110, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatOrb 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(30px, -30px); }
+      50% { transform: translate(0, -60px); }
+      75% { transform: translate(-30px, -30px); }
+    }
+
+    /* GRID PATTERN OVERLAY */
+    header .grid-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(0deg, transparent 24%, rgba(212, 160, 23, 0.05) 25%, rgba(212, 160, 23, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 160, 23, 0.05) 75%, rgba(212, 160, 23, 0.05) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(212, 160, 23, 0.05) 25%, rgba(212, 160, 23, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 160, 23, 0.05) 75%, rgba(212, 160, 23, 0.05) 76%, transparent 77%, transparent);
+      background-size: 80px 80px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(80px, 80px); }
+    }
+
+    /* ANIMATED LINES */
+    header .animated-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
+    .line1 {
+      width: 100%;
+      height: 1px;
+      top: 20%;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%);
-      animation: shimmer 3s infinite;
+      animation: lineSlide 4s ease-in-out infinite;
     }
 
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+    .line2 {
+      width: 100%;
+      height: 1px;
+      top: 50%;
+      left: 0;
+      animation: lineSlide 5s ease-in-out infinite reverse;
     }
 
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 6vw, 56px);
-      font-weight: 900;
-      margin-bottom: 16px;
-      color: #fff;
+    .line3 {
+      width: 1px;
+      height: 100%;
+      left: 25%;
+      top: 0;
+      animation: lineSlideV 6s ease-in-out infinite;
+    }
+
+    .line4 {
+      width: 1px;
+      height: 100%;
+      right: 25%;
+      top: 0;
+      animation: lineSlideV 7s ease-in-out infinite reverse;
+    }
+
+    @keyframes lineSlide {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes lineSlideV {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* HEADER CONTENT */
+    .header-content {
       position: relative;
-      z-index: 1;
-      background: linear-gradient(120deg, #fff, #d4a017, #fff);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradientShift 3s ease infinite;
+      z-index: 10;
+      text-align: center;
+      padding: 80px 40px;
+      max-width: 900px;
     }
 
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% center; }
-      50% { background-position: 100% center; }
-    }
-
-    header > p {
-      font-size: 18px;
-      color: rgba(250,248,244,0.8);
-      max-width: 600px;
-      margin: 0 auto 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .author-section {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 2px solid rgba(250,248,244,0.2);
-      position: relative;
-      z-index: 1;
-    }
-
-    .author-info {
+    /* BADGE */
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(212, 160, 23, 0.2), rgba(26, 122, 110, 0.2));
+      border: 1px solid rgba(212, 160, 23, 0.5);
+      padding: 12px 24px;
+      border-radius: 50px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 8px;
-      animation: fadeInUp 0.8s ease forwards;
+      margin-bottom: 24px;
+      animation: fadeInDown 0.8s ease forwards;
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MAIN TITLE WITH GLOW */
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      margin: 20px 0 30px;
+      line-height: 1.1;
+      animation: fadeInUp 1s ease forwards;
       opacity: 0;
       animation-delay: 0.2s;
     }
 
-    .author-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-      animation: fadeInUp 0.8s ease forwards;
-      opacity: 0;
-      animation-delay: 0.3s;
+    header h1 .text-gradient {
+      background: linear-gradient(120deg, #fff 0%, var(--gold) 25%, #fff 50%, var(--teal) 75%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textGradient 4s linear infinite;
+      display: block;
     }
 
-    .author-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: rgba(250,248,244,0.7);
-      text-transform: uppercase;
-      animation: fadeInUp 0.8s ease forwards;
-      opacity: 0;
-      animation-delay: 0.4s;
+    @keyframes textGradient {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* TEXT SHADOW GLOW */
+    header h1 {
+      text-shadow: 
+        0 0 20px rgba(212, 160, 23, 0.3),
+        0 0 40px rgba(26, 122, 110, 0.2);
+      filter: drop-shadow(0 0 10px rgba(212, 160, 23, 0.2));
     }
 
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SUBTITLE WITH TYPING EFFECT */
+    .header-subtitle {
+      font-size: 18px;
+      color: rgba(250, 248, 244, 0.85);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.4s;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+    }
+
+    /* AUTHOR CARD */
+    .author-card {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(26, 122, 110, 0.15), rgba(212, 160, 23, 0.1));
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 12px;
+      padding: 24px 32px;
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.6s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .author-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmerAnim 2s infinite;
+    }
+
+    @keyframes shimmerAnim {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .author-info {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .author-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .author-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: rgba(250, 248, 244, 0.8);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SCROLL INDICATOR */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .scroll-icon {
+      width: 24px;
+      height: 40px;
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-icon::after {
+      content: '';
+      width: 2px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 1px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDot {
+      0%, 100% { opacity: 1; transform: translateY(-5px); }
+      50% { opacity: 0.3; transform: translateY(5px); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
     }
 
     /* CONTAINER */
@@ -551,8 +743,9 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      header { padding: 50px 24px; }
-      header h1 { font-size: 32px; }
+      header { min-height: 500px; padding: 40px 24px; }
+      .header-content { padding: 60px 24px; }
+      header h1 { font-size: 36px; }
       .container { padding: 0 20px; }
       .articles-grid { grid-template-columns: 1fr; }
       .intro-grid { grid-template-columns: 1fr; }
@@ -562,7 +755,9 @@
     }
 
     @media (max-width: 480px) {
-      header h1 { font-size: 24px; }
+      header { min-height: 450px; }
+      header h1 { font-size: 28px; }
+      .header-subtitle { font-size: 14px; }
       .section-title { font-size: 28px; }
       .article-card { padding: 20px; }
       .stats-container { grid-template-columns: 1fr; }
@@ -572,12 +767,26 @@
 <body>
 
 <header>
-  <h1>Reading Content</h1>
-  <p>Deep-dive technical content with professional design and interactive elements</p>
-  <div class="author-section">
-    <div class="author-info">✦ Curated By</div>
-    <div class="author-name">Er. Rishabh Tripathi</div>
-    <div class="author-title">AI Engineer</div>
+  <div class="grid-overlay"></div>
+  <div class="animated-line line1"></div>
+  <div class="animated-line line2"></div>
+  <div class="animated-line line3"></div>
+  <div class="animated-line line4"></div>
+
+  <div class="header-content">
+    <div class="header-badge">✦ Deep Technical Content Platform</div>
+    <h1><span class="text-gradient">Reading Content</span></h1>
+    <p class="header-subtitle">Explore profound insights into AI protocols, system design, and cutting-edge technologies through meticulously crafted articles with original diagrams and interactive elements.</p>
+    
+    <div class="author-card">
+      <div class="author-info">Curated By</div>
+      <div class="author-name">Er. Rishabh Tripathi</div>
+      <div class="author-title">AI Engineer</div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-icon"></div>
   </div>
 </header>
 
