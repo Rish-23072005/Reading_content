@@ -59,7 +59,32 @@
       font-size: 17px;
       color: rgba(250,248,244,0.7);
       max-width: 600px;
-      margin: 0 auto;
+      margin: 0 auto 16px;
+    }
+
+    .author-info {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .author-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .author-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(250,248,244,0.6);
+      text-transform: uppercase;
     }
 
     /* CONTAINER */
@@ -266,6 +291,11 @@
 <header>
   <h1>Reading Content</h1>
   <p>Deep-dive technical content with professional design and interactive elements</p>
+  <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(250,248,244,0.2);">
+    <div class="author-info">✦ By</div>
+    <div class="author-name">Er. Rishabh Tripathi</div>
+    <div class="author-title">AI Engineer</div>
+  </div>
 </header>
 
 <main class="container">
@@ -329,7 +359,7 @@
 </main>
 
 <footer>
-  <p>&copy; 2026 Reading Content. All articles freely available.</p>
+  <p>&copy; 2026 Reading Content by Er. Rishabh Tripathi. All articles freely available.</p>
   <p><a href="https://github.com/Rish-23072005/Reading_content">GitHub Repository</a> · <a href="https://reading-content.vercel.app">Live Preview</a></p>
 </footer>
 
